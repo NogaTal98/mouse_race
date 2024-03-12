@@ -13,9 +13,9 @@ document.body.appendChild( renderer.domElement );
 const raycaster = new THREE.Raycaster()
 const mouse = new THREE.Vector2()
 
-const number_of_boxes =  Math.floor(Math.random() * (5-1)+1);
-const number_of_spheres = Math.floor(Math.random() * (5-1)+1);
-const number_of_pyramids = Math.floor(Math.random() * (5-1)+1);
+const number_of_boxes =  Math.floor(Math.random() * (8-1)+1);
+const number_of_spheres = Math.floor(Math.random() * (8-1)+1);
+const number_of_pyramids = Math.floor(Math.random() * (8-1)+1);
 
 let boxes: Box[] = [];
 for (let i = 0; i < number_of_boxes; i++) {
