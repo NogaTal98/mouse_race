@@ -45,7 +45,7 @@ class Game{
         }
 
         this.isStarted = true;
-
+        
         var timerText = document.createElement( 'div' );
         timerText.style.position = 'absolute';
         timerText.style.color = 'white';

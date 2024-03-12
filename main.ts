@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import Game from './game.ts';
 import StartScreen from './startScreen.ts';
+import GameElement from './gameElement.ts';
 
 const game = new Game();
 const startScreen = new StartScreen();
@@ -12,7 +13,7 @@ document.body.appendChild( renderer.domElement );
 
 const raycaster = new THREE.Raycaster()
 const mouse = new THREE.Vector2()
-let intersects = []
+let intersects: any[] = []
 window.addEventListener('pointermove', (e) => {
 	mouse.set((e.clientX / window.innerWidth) * 2 - 1, - (e.clientY / window.innerHeight) * 2 + 1)
 	raycaster.setFromCamera(mouse, camera)
@@ -20,14 +21,14 @@ window.addEventListener('pointermove', (e) => {
 })
 
 window.addEventListener('click', (e) => {
-	intersects.forEach((hit: any) => {
+	if (intersects.length > 0) {
 		if (game.isStarted) {
-			hit.object.onClick(() => game.removeElement(hit.object), () => game.endGame());
+			intersects[0].object.onClick(() => game.removeElement(intersects[0].object), () => game.endGame());
 		}
 		else {
 			game.initScene();
 		}
-	})
+	}
 })
 
 camera.position.z = 5;
@@ -50,6 +51,7 @@ function animate() {
 		game.isWon();
 	}
 	else {
+		document.getElementById("timer")?.remove();
 		renderer.render( startScreen.scene, camera );
 	}
 }
