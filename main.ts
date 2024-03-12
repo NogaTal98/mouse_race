@@ -1,52 +1,56 @@
 import * as THREE from 'three';
-import Box from './box.ts';
-import Sphere from './sphere.ts';
-import Pyramid from './pyramid.ts';
+import Game from './game.ts';
+import StartScreen from './startScreen.ts';
 
-const scene = new THREE.Scene();
+const game = new Game();
+const startScreen = new StartScreen();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
-const number_of_boxes =  Math.floor(Math.random() * (5-1)+1);
-const number_of_spheres = Math.floor(Math.random() * (5-1)+1);
-const number_of_pyramids = Math.floor(Math.random() * (5-1)+1);
+const raycaster = new THREE.Raycaster()
+const mouse = new THREE.Vector2()
+let intersects = []
+window.addEventListener('pointermove', (e) => {
+	mouse.set((e.clientX / window.innerWidth) * 2 - 1, - (e.clientY / window.innerHeight) * 2 + 1)
+	raycaster.setFromCamera(mouse, camera)
+	intersects = raycaster.intersectObjects(game.isStarted ? game.scene.children : startScreen.scene.children, true)
+})
 
-let boxes: Box[] = [];
-for (let i = 0; i < number_of_boxes; i++) {
-	boxes.push(new Box());
-	scene.add(boxes[i].shape);
-}
-
-let spheres: Sphere[] = [];
-for (let i = 0; i < number_of_spheres; i++) {
-	spheres.push(new Sphere());
-	scene.add(spheres[i].shape);
-}
-
-let pyramids: Pyramid[] = [];
-for (let i = 0; i < number_of_pyramids; i++) {
-	pyramids.push(new Pyramid());
-	scene.add(pyramids[i].shape);
-}
+window.addEventListener('click', (e) => {
+	intersects.forEach((hit: any) => {
+		if (game.isStarted) {
+			hit.object.onClick(() => game.removeElement(hit.object), () => game.endGame());
+		}
+		else {
+			game.initScene();
+		}
+	})
+})
 
 camera.position.z = 5;
+
+//lights
+const directionalLight1 = new THREE.DirectionalLight( 0xffffff, 1 );
+directionalLight1.position.set( 0, 0.2, 1);
+const directionalLight2 = new THREE.DirectionalLight( 0xffffff, 1 );
+directionalLight2.position.set( 0, 1, 0);
+const ambientLight = new THREE.AmbientLight( 0x404040 ); // soft white light
+game.scene.add( directionalLight1, directionalLight2, ambientLight);
 
 function animate() {
 	requestAnimationFrame( animate );
 
-	for (let i = 0; i < number_of_boxes; i++) {
-		boxes[i].move();
+	if (game.isStarted) {
+		game.updateTimer();
+		game.moveElements();
+		renderer.render( game.scene, camera );
+		game.isWon();
 	}
-	for (let i = 0; i < number_of_spheres; i++) {
-		spheres[i].move();
+	else {
+		renderer.render( startScreen.scene, camera );
 	}
-	for (let i = 0; i < number_of_pyramids; i++) {
-		pyramids[i].move();
-	}
-
-	renderer.render( scene, camera );
 }
 animate();
