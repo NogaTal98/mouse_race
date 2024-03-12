@@ -32,6 +32,14 @@ window.addEventListener('click', (e) => {
 
 camera.position.z = 5;
 
+//lights
+const directionalLight1 = new THREE.DirectionalLight( 0xffffff, 1 );
+directionalLight1.position.set( 0, 0.2, 1);
+const directionalLight2 = new THREE.DirectionalLight( 0xffffff, 1 );
+directionalLight2.position.set( 0, 1, 0);
+const ambientLight = new THREE.AmbientLight( 0x404040 ); // soft white light
+game.scene.add( directionalLight1, directionalLight2, ambientLight);
+
 function animate() {
 	requestAnimationFrame( animate );
 

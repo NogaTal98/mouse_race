@@ -3,13 +3,14 @@ import GameElement from './gameElement';
 import Box from './box';
 import Sphere from './sphere';  
 import Pyramid from './pyramid';
+import { c } from 'vite/dist/node/types.d-FdqQ54oU';
 
 class Game{
     scene: THREE.Scene;
     gameElements: GameElement[] = [];
-    number_of_boxes: number =  Math.floor(Math.random() * (8-1)+1);
-    number_of_spheres: number = Math.floor(Math.random() * (8-1)+1);
-    number_of_pyramids: number = Math.floor(Math.random() * (8-1)+1);
+    number_of_boxes: number;
+    number_of_spheres: number;
+    number_of_pyramids: number;
     isStarted: boolean = false;
 
     constructor() {
@@ -17,6 +18,15 @@ class Game{
     }
 
     initScene () {
+        this.gameElements.forEach((element) => {
+            this.scene.remove(element);
+        });
+        this.gameElements = [];
+        this.number_of_boxes =  Math.floor(Math.random() * (8-1)+1);
+        this.number_of_spheres = Math.floor(Math.random() * (8-1)+1);
+        this.number_of_pyramids = Math.floor(Math.random() * (8-1)+1);
+        
+
         for (let i = 0; i < this.number_of_boxes; i++) {
             let box = new Box();
             this.gameElements.push(box);
@@ -40,6 +50,7 @@ class Game{
 
     removeElement(element: GameElement) {
         this.scene.remove(element)
+        this.gameElements = this.gameElements.filter((el) => el !== element)
     }
 
     moveElements() {
@@ -50,7 +61,7 @@ class Game{
 
     isWon() {
         let flag = true;
-        this.scene.children.forEach((element) => {
+        this.gameElements.forEach((element) => {
             if (element.geometry.type === 'BoxGeometry' || element.geometry.type === 'CylinderGeometry') {
                 flag = false;
             }

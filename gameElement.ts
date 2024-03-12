@@ -23,7 +23,7 @@ class GameElement extends THREE.Mesh {
     }
 
     public update_color() {
-        this.material = new THREE.MeshBasicMaterial( { color: this.type == Type.Collect ? 0x00ff00 : 0xff0000} );
+        this.material = new THREE.MeshPhongMaterial( { color: this.type == Type.Collect ? 0x00ff00 : 0xff0000} );
     }
 
     public onClick(removeElement: any, EndGame: any) {

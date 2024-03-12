@@ -8,7 +8,7 @@ class Pyramid extends GameElement{
         super();
         this.type = Math.random() <= 0.5 ? Type.Collect : Type.Avoid;
         this.speed = 0.01;
-        this.direction = 1;
+        this.direction = -1;
         this.startTime = new Date().getTime();
         this.geometry = new THREE.CylinderGeometry(0, Math.random()*(1-0.4)+0.4,  Math.random()*(1-0.4)+0.4, 3, 1 );
         this.material = new THREE.MeshBasicMaterial( { color: 0xffffff } );
