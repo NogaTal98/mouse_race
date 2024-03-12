@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import Game from './game.ts';
 import StartScreen from './startScreen.ts';
 
-//initiate game ssene, start-screen scene, and camera
+//initiate game scene, start-screen scene, and camera
 const game = new Game();
 const startScreen = new StartScreen();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );

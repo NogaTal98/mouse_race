@@ -84,7 +84,7 @@ class Game{
         })
     }
 
-    // checks if all element that can be collected are collected, if so, declare the game as won
+    // checks if all elements that needed to be collected are collected, if so, declare the game as won
     isWon() {
         let flag = true;
         this.gameElements.forEach((element) => {
