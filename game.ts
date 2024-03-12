@@ -3,8 +3,7 @@ import GameElement from './gameElement';
 import Box from './box';
 import Sphere from './sphere';  
 import Pyramid from './pyramid';
-import { FontLoader } from 'three/addons/loaders/FontLoader.js';
-import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+import { Timer } from 'three/addons/misc/Timer.js';
 
 class Game{
     scene: THREE.Scene;
@@ -13,6 +12,7 @@ class Game{
     number_of_spheres: number;
     number_of_pyramids: number;
     isStarted: boolean = false;
+    timer: Timer;
 
     constructor() {
         this.scene = new THREE.Scene();
@@ -27,42 +27,45 @@ class Game{
         this.number_of_spheres = Math.floor(Math.random() * (8-1)+1);
         this.number_of_pyramids = Math.floor(Math.random() * (8-1)+1);
         
-
+        //add elements to the sceen
         for (let i = 0; i < this.number_of_boxes; i++) {
             let box = new Box();
             this.gameElements.push(box);
             this.scene.add(box);
         }
-    
         for (let i = 0; i < this.number_of_spheres; i++) {
             let sphere = new Sphere();
             this.gameElements.push(sphere);
             this.scene.add(sphere);
         }
-    
         for (let i = 0; i < this.number_of_pyramids; i++) {
             let pyramid = new Pyramid();
             this.gameElements.push(pyramid);
             this.scene.add(pyramid);
         }
 
-        let group = new THREE.Group();
-        this.scene.add(group);
-
-        const loader = new FontLoader();
-        loader.load( "helvetiker_regular.typeface.json", function ( font ) {
-            const geometry = new TextGeometry( '00:00', {
-                font: font,
-                size: 0.2,
-                height: 0.005,
-            } );
-            var material = new THREE.MeshBasicMaterial( { color: 0xffffff } );
-            var text = new THREE.Mesh( geometry, material );
-            text.position.set(0, 3.5, 0);
-            group.add( text );
-        } );
-
         this.isStarted = true;
+
+        var timerText = document.createElement( 'div' );
+        timerText.style.position = 'absolute';
+        timerText.style.color = 'white';
+        timerText.style.top = '0%';
+        timerText.style.textAlign = 'center';
+        timerText.style.width = '100%';
+        timerText.style.margin = '0 auto';
+        timerText.innerHTML = '<div id = "timer">00:00</div>'
+
+        document.body.appendChild( timerText );
+
+        this.timer = new Timer();
+    }
+
+    updateTimer() {
+        this.timer.update();
+        const secElapsed = this.timer.getElapsed().toFixed(0);
+        const min = Math.floor(secElapsed / 60);
+        const sec = secElapsed % 60;
+        document.getElementById("timer").innerHTML ="<div>" + (min < 10 ? "0" + min : min) + ":" + (sec < 10 ? "0" + sec : sec) + "</div>";
     }
 
     removeElement(element: GameElement) {

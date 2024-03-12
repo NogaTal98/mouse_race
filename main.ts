@@ -44,6 +44,7 @@ function animate() {
 	requestAnimationFrame( animate );
 
 	if (game.isStarted) {
+		game.updateTimer();
 		game.moveElements();
 		renderer.render( game.scene, camera );
 		game.isWon();
