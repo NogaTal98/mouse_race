@@ -50,6 +50,7 @@ function animate() {
 		game.isWon();
 	}
 	else {
+		document.getElementById("timer")?.remove();
 		renderer.render( startScreen.scene, camera );
 	}
 }
