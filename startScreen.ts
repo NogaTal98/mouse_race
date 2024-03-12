@@ -16,11 +16,7 @@ class StartScreen{
         startButton.material.map = texture;
 
         this.scene.add(startButton);
-    }
-
-    
-
-    
+    } 
 }
 
 export default StartScreen;

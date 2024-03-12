@@ -3,7 +3,8 @@ import GameElement from './gameElement';
 import Box from './box';
 import Sphere from './sphere';  
 import Pyramid from './pyramid';
-import { c } from 'vite/dist/node/types.d-FdqQ54oU';
+import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 
 class Game{
     scene: THREE.Scene;
@@ -44,6 +45,22 @@ class Game{
             this.gameElements.push(pyramid);
             this.scene.add(pyramid);
         }
+
+        let group = new THREE.Group();
+        this.scene.add(group);
+
+        const loader = new FontLoader();
+        loader.load( "helvetiker_regular.typeface.json", function ( font ) {
+            const geometry = new TextGeometry( '00:00', {
+                font: font,
+                size: 0.2,
+                height: 0.005,
+            } );
+            var material = new THREE.MeshBasicMaterial( { color: 0xffffff } );
+            var text = new THREE.Mesh( geometry, material );
+            text.position.set(0, 3.5, 0);
+            group.add( text );
+        } );
 
         this.isStarted = true;
     }
