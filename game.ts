@@ -18,6 +18,7 @@ class Game{
         this.scene = new THREE.Scene();
     }
 
+    //initiate the game - sets the number of elements and add them to the scene
     initScene () {
         this.gameElements.forEach((element) => {
             this.scene.remove(element);
@@ -27,7 +28,7 @@ class Game{
         this.number_of_spheres = Math.floor(Math.random() * (8-1)+1);
         this.number_of_pyramids = Math.floor(Math.random() * (8-1)+1);
         
-        //add elements to the sceen
+        //add elements to the scene
         for (let i = 0; i < this.number_of_boxes; i++) {
             let box = new Box();
             this.gameElements.push(box);
@@ -46,6 +47,7 @@ class Game{
 
         this.isStarted = true;
         
+        // set timer atrributes
         var timerText = document.createElement( 'div' );
         timerText.style.position = 'absolute';
         timerText.style.color = 'white';
@@ -60,6 +62,7 @@ class Game{
         this.timer = new Timer();
     }
 
+    //update the timer
     updateTimer() {
         this.timer.update();
         const secElapsed = this.timer.getElapsed().toFixed(0);
@@ -68,17 +71,20 @@ class Game{
         document.getElementById("timer").innerHTML ="<div>" + (min < 10 ? "0" + min : min) + ":" + (sec < 10 ? "0" + sec : sec) + "</div>";
     }
 
+    // delete element from the scene and gameElements array after being clicked
     removeElement(element: GameElement) {
         this.scene.remove(element)
         this.gameElements = this.gameElements.filter((el) => el !== element)
     }
 
+    // move all elements in the scene
     moveElements() {
         this.gameElements.forEach((element) => {
             element.move()
         })
     }
 
+    // checks if all element that can be collected are collected, if so, declare the game as won
     isWon() {
         let flag = true;
         this.gameElements.forEach((element) => {

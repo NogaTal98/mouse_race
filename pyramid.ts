@@ -1,3 +1,4 @@
+// pyramid object witch is type changed every 4 seconds
 import * as THREE from 'three';
 import GameElement from './gameElement';
 import Type from './type';

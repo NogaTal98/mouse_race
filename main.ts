@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import Game from './game.ts';
 import StartScreen from './startScreen.ts';
-import GameElement from './gameElement.ts';
 
+//initiate game ssene, start-screen scene, and camera
 const game = new Game();
 const startScreen = new StartScreen();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
@@ -11,6 +11,7 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
+//calculate mouse position and intersection with objects to enable click events
 const raycaster = new THREE.Raycaster()
 const mouse = new THREE.Vector2()
 let intersects: any[] = []
@@ -20,6 +21,7 @@ window.addEventListener('pointermove', (e) => {
 	intersects = raycaster.intersectObjects(game.isStarted ? game.scene.children : startScreen.scene.children, true)
 })
 
+//click event
 window.addEventListener('click', (e) => {
 	if (intersects.length > 0) {
 		if (game.isStarted) {
@@ -33,7 +35,7 @@ window.addEventListener('click', (e) => {
 
 camera.position.z = 5;
 
-//lights
+//add lights to the scene
 const directionalLight1 = new THREE.DirectionalLight( 0xffffff, 1 );
 directionalLight1.position.set( 0, 0.2, 1);
 const directionalLight2 = new THREE.DirectionalLight( 0xffffff, 1 );

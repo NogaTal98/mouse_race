@@ -1,3 +1,4 @@
+// set the start screen contains the "start" button
 import * as THREE from 'three';
 import GameElement from './gameElement';
 

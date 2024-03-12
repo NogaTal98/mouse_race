@@ -1,3 +1,4 @@
+// sphere object with it's type is avoid
 import * as THREE from 'three';
 import GameElement from './gameElement';
 import Type from './type'; 

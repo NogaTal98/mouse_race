@@ -1,3 +1,4 @@
+//box object with it's type is collect
 import * as THREE from 'three';
 import GameElement from './gameElement';
 import Type from './type';
