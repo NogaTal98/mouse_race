@@ -26,9 +26,12 @@ class GameElement extends THREE.Mesh {
         this.material = new THREE.MeshBasicMaterial( { color: this.type == Type.Collect ? 0x00ff00 : 0xff0000} );
     }
 
-    public onClick(removeElement: any) {
+    public onClick(removeElement: any, isGameOver: any) {
         if (this.type == Type.Collect) {
             removeElement(this);
+            if(isGameOver()) {
+                alert("You won");
+            }
         }
         else {
             alert("Game Over");
