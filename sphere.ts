@@ -10,7 +10,7 @@ class Sphere extends GameElement{
         this.speed = 0.01;
         this.direction = Math.random() < 0.5 ? -1 : 1;
         this.startTime = new Date().getTime();
-        this.geometry =new THREE.SphereGeometry( Math.random()*(0.5-0.2)+0.2 ,32 ,16 );
+        this.geometry = new THREE.SphereGeometry( Math.random()*(0.5-0.2)+0.2 ,32 ,16 );
         this.material = new THREE.MeshBasicMaterial( { color: 0xffffff } );
         super.init_position();
         super.update_color();

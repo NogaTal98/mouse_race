@@ -10,6 +10,7 @@ class Game{
     number_of_boxes: number = Math.floor(Math.random() * (8-1)+1);
     number_of_spheres: number = Math.floor(Math.random() * (8-1)+1);
     number_of_pyramids: number = Math.floor(Math.random() * (8-1)+1);
+    isStarted: boolean = false;
 
     constructor() {
         this.scene = new THREE.Scene();
@@ -33,6 +34,8 @@ class Game{
             this.gameElements.push(pyramid);
             this.scene.add(pyramid);
         }
+
+        this.isStarted = true;
     }
 
     removeElement(element: GameElement) {
