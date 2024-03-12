@@ -7,7 +7,7 @@ import Pyramid from './pyramid';
 class Game{
     scene: THREE.Scene;
     gameElements: GameElement[] = [];
-    number_of_boxes: number = Math.floor(Math.random() * (8-1)+1);
+    number_of_boxes: number =  Math.floor(Math.random() * (8-1)+1);
     number_of_spheres: number = Math.floor(Math.random() * (8-1)+1);
     number_of_pyramids: number = Math.floor(Math.random() * (8-1)+1);
     isStarted: boolean = false;
@@ -46,6 +46,24 @@ class Game{
         this.gameElements.forEach((element) => {
             element.move()
         })
+    }
+
+    isWon() {
+        let flag = true;
+        this.scene.children.forEach((element) => {
+            if (element.geometry.type === 'BoxGeometry' || element.geometry.type === 'CylinderGeometry') {
+                flag = false;
+            }
+        })
+        if (flag){
+            alert("You Won!");
+		    this.isStarted = false;
+        }
+    }
+
+    endGame() {
+        alert("Game Over");
+        this.isStarted = false;
     }
 }
 

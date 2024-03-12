@@ -10,8 +10,6 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
-//game.initScene();
-
 const raycaster = new THREE.Raycaster()
 const mouse = new THREE.Vector2()
 let intersects = []
@@ -24,7 +22,7 @@ window.addEventListener('pointermove', (e) => {
 window.addEventListener('click', (e) => {
 	intersects.forEach((hit: any) => {
 		if (game.isStarted) {
-			hit.object.onClick(() => game.removeElement(hit.object))
+			hit.object.onClick(() => game.removeElement(hit.object), () => game.endGame());
 		}
 		else {
 			game.initScene();
@@ -40,11 +38,10 @@ function animate() {
 	if (game.isStarted) {
 		game.moveElements();
 		renderer.render( game.scene, camera );
+		game.isWon();
 	}
 	else {
 		renderer.render( startScreen.scene, camera );
 	}
-
-	
 }
 animate();

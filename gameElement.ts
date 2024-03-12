@@ -14,9 +14,9 @@ class GameElement extends THREE.Mesh {
     rotation: THREE.rotation;
 
     public init_position() {
-        this.position.x = Math.random()*(4-(-4))+(-4);
-        this.position.y = Math.random()*(4-(-4))+(-4);
-        this.position.z = Math.random()*(4-(-4))+(-4);
+        this.position.x = Math.random()*(2-(-2))+(-2);
+        this.position.y = Math.random()*(2-(-2))+(-2);
+        this.position.z = Math.random()*(2-(-2))+(-2);
     }
 
     public move() {
@@ -26,15 +26,12 @@ class GameElement extends THREE.Mesh {
         this.material = new THREE.MeshBasicMaterial( { color: this.type == Type.Collect ? 0x00ff00 : 0xff0000} );
     }
 
-    public onClick(removeElement: any, isGameOver: any) {
+    public onClick(removeElement: any, EndGame: any) {
         if (this.type == Type.Collect) {
             removeElement(this);
-            if(isGameOver()) {
-                alert("You won");
-            }
         }
         else {
-            alert("Game Over");
+            EndGame();
         }
     }
 }
